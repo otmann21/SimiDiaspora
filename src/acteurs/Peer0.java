@@ -4,9 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.simgrid.msg.Host;
+import org.simgrid.msg.HostFailureException;
 import org.simgrid.msg.Msg;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Process;
+import org.simgrid.msg.Task;
+import org.simgrid.msg.TimeoutException;
+import org.simgrid.msg.TransferFailureException;
 
 import taches.AjouteDonnee;
 import taches.Message;
@@ -51,5 +55,18 @@ public class Peer0 extends Process {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/*
+	 * Le peer se connecte à son superpeer pour lui donner son code et obtenir ses amis.
+	 */
+	public void connexion(String sp) throws TransferFailureException, HostFailureException, TimeoutException{
+		this.code = new byte[]{42, 23, 76, 21};
+		Message envoiCode = new Message(this.code, 2);
+		envoiCode.send(sp);
+		Task.listen(Host.currentHost().getName());
+		
+		
+		
 	}
 }

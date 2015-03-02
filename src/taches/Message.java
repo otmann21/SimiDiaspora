@@ -17,6 +17,7 @@ public class Message extends Task{
 	
 	protected String message;
 	protected byte[] hash;
+	protected String nomPeer;
 	protected byte[] code;
 	protected ArrayList<String> list;
 	protected int type;
@@ -68,5 +69,13 @@ public class Message extends Task{
 	
 	public byte[] getCode(){
 		return code;
+	}
+	
+	public void setNomPeer(String np){
+		this.nomPeer=np;
+	}
+	
+	public String getNomPeer(){
+		return this.nomPeer;
 	}
 }

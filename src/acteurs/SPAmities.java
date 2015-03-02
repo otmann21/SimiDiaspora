@@ -59,15 +59,17 @@ public class SPAmities extends Process {
 					ArrayList<String> listeAmis= new ArrayList();
 					for(Object amiDuPeer : ((ArrayList) this.infoPeers.get(message.getSource().getName()).get("amis"))){
 						Message msgCode = new Message(((Message) message).getCode(),2);
+						msgCode.setNomPeer(message.getSource().getName());
 						msgCode.send((String) amiDuPeer);
 						listeAmis.add((String) amiDuPeer);
 					}
 					//envoi de la liste des amis
 					Message msgListeAmis = new Message(listeAmis, 3);
-					msgListeAmis.send(message.getSource().getName());					
+					msgListeAmis.send(message.getSource().getName());
+					//On envoie juste les noms des amis, et pas leurs codes parce qu'ils ne se sont peut-etre pas encore connectés
+					//Au moment ou ils obitennent un code, le peer le recevra, même si il n'est pas connecté. Il pourra l'obtenir.
 				}
 			}
-			
 		}
 	}
 	
