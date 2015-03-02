@@ -9,6 +9,8 @@ import org.simgrid.msg.Msg;
 import org.simgrid.msg.MsgException;
 import org.simgrid.msg.Task;
 import org.simgrid.msg.Process;
+
+import taches.Message;
 /**
  * Superpeer d'amitié.
  * Ce superpeer va stocker des infos sur les peers et leurs amitiés. Notamment leurs liens, leur code, et leur superpeer de donnée.
@@ -17,11 +19,13 @@ import org.simgrid.msg.Process;
  * @param args
  */
 public class SPAmities extends Process {
+	
+	HashMap<String, HashMap<String,Object>> infoPeers;
 
 	public SPAmities(Host host, String name, String[]args) throws NumberFormatException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		super(host,name,args);
 
-		HashMap<String, HashMap<String,Object>> infoPeers = new HashMap<String, HashMap<String,Object>>();
+		infoPeers = new HashMap<String, HashMap<String,Object>>();
 		
 		//On met des liens d'amitiés manuellement dans le code java.
 		//A l'avenir, un fichier XML devra stocker ces relations.
@@ -44,10 +48,29 @@ public class SPAmities extends Process {
 		Msg.info(this.host.getName() + " ecoute les requetes sur sa boite aux lettres.");
 		while(true){
 			Task.listen(this.host.getName());
-			Task requete = Task.receive(this.host.getName());
-			requete.execute();
+			Task message = Task.receive(this.host.getName());
+			//on regarde si le message est un peer qui envoie son code
+			if(message instanceof Message && ((Message) message).getType()==2){
+				if(this.infoPeers.containsKey(message.getSource().getName())){
+					//on ajoute le code aux donnée du peer
+					this.infoPeers.get(message.getSource().getName()).put("code", ((Message) message).getCode());
+					//on envoie le code a chacun de ses amis
+					//on envoie aux peer les noms de ses amis dans une ArrayList. C'est un Message de type 3.
+					ArrayList<String> listeAmis= new ArrayList();
+					for(Object amiDuPeer : ((ArrayList) this.infoPeers.get(message.getSource().getName()).get("amis"))){
+						Message msgCode = new Message(((Message) message).getCode(),2);
+						msgCode.send((String) amiDuPeer);
+						listeAmis.add((String) amiDuPeer);
+					}
+					//envoi de la liste des amis
+					Message msgListeAmis = new Message(listeAmis, 3);
+					msgListeAmis.send(message.getSource().getName());					
+				}
+			}
+			
 		}
 	}
+	
 
 	
 }
