@@ -51,7 +51,7 @@ public class Peer0 extends Process {
 			md.reset();
 			md.update(args[1].getBytes());
 			Msg.info(Host.currentHost().getName()+" donne à ses amis le hash de l'info qu'il a ajouté sur " + args[0] + ".");
-			(new Message(md.digest())).send(this.mbox);
+			(new Message(md.digest(), 1)).send(this.mbox);
 
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block

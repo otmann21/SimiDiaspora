@@ -38,17 +38,12 @@ public class Message extends Task{
 		this.list=list;
 		this.type=type;
 	}
-	
-	public Message(byte[] hash){
-		super();
-		this.hash=hash;
-		this.type=1;
-	}
+
 	
 	public Message(byte[] code, int type){
 		super();
 		this.code=code;
-		this.type=2;
+		this.type=type;
 	}
 	
 	public void execute() throws HostFailureException,TaskCancelledException {
