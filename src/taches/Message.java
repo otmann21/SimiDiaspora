@@ -78,4 +78,8 @@ public class Message extends Task{
 	public String getNomPeer(){
 		return this.nomPeer;
 	}
+	
+	public ArrayList<String> getList(){
+		return this.list;
+	}
 }
