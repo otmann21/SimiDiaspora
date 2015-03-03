@@ -2,7 +2,7 @@
 <!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid.dtd">
 <platform version="3">
 	<!--add your mapping between process and hosts here -->
-	<process host="superpeer0" function="acteurs.SuperPeer">
+<!-- 	<process host="superpeer0" function="acteurs.SuperPeer">
 		<argument value="50" />
 	</process>
 	<process host="peer0" function="acteurs.Peer0">
@@ -11,6 +11,20 @@
 	</process>
 	<process host="peer1" function="acteurs.Peer1">
 		<argument value="superpeer0" />
+	</process> -->
+	
+	<process host="superpeer0" function="acteurs.SuperPeer">
+			<argument value="50" />
 	</process>
-
+	<process host="superpeer0" function="acteurs.SPAmities"></process>
+	<process host="Abdel" function="process.Reception">
+			<argument value="superpeer0" />
+	</process>
+	<process host="Hicham" function="process.Reception">
+			<argument value="superpeer0" />
+	</process>
+	<process host="Abdel" function="process.Publication">
+			<argument value="superpeer0" />
+			<argument value="Otmann est trop cool." />			
+	</process>
 </platform>

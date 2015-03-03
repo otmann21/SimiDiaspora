@@ -32,7 +32,7 @@ public class Publication extends Process {
 	public Publication(Host host, String name, String[]args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		super(host,name,args);
 		this.amis=(HashMap<String, byte[]>) host.getData();
-		monCode = new byte[]{42, 23, 76, 21};
+		monCode = new byte[]{01};
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		md.reset();
 		md.update(monCode);
@@ -40,7 +40,7 @@ public class Publication extends Process {
 	}
 
 	public void main(String[] args) throws MsgException {
-
+		Process.sleep(1400);
 		AjouteDonnee env = new AjouteDonnee(args[1]);
 		Msg.info(Host.currentHost().getName()+" ajoute une donnée sur " + args[0] + ".");
 		env.send(args[0]);

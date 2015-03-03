@@ -3,18 +3,18 @@
 <platform version="3">
 	<AS id="main" routing="Full">
 		<host id="superpeer0" power="1000000000" />
-		<host id="peer0" power="1000000000" />
-		<host id="peer1" power="1000000000" />
+		<host id="Abdel" power="1000000000" />
+		<host id="Hicham" power="1000000000" />
 		<link id="lien0" bandwidth="125000000" latency="0.000100" />
 		<link id="lien1" bandwidth="125000000" latency="0.000100" />
 		<link id="lien2" bandwidth="125000000" latency="0.000100" />
-		<route src="peer0" dst="superpeer0">
+		<route src="Abdel" dst="superpeer0">
 			<link_ctn id="lien0" />
 		</route>
-		<route src="peer1" dst="superpeer0">
+		<route src="Hicham" dst="superpeer0">
 			<link_ctn id="lien1" />
 		</route>
-		<route src="peer0" dst="peer1">
+		<route src="Abdel" dst="Hicham">
 			<link_ctn id="lien2" />
 		</route>
 	</AS>
