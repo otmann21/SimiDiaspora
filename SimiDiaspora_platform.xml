@@ -2,7 +2,7 @@
 <!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid.dtd">
 <platform version="3">
 	<AS id="main" routing="Full">
-		<host id="superpeer0" power="1000000000" />
+		<host id="superpeer0" power="1000000000000" />
 		<host id="Abdel" power="1000000000" />
 		<host id="Hicham" power="1000000000" />
 		<link id="lien0" bandwidth="125000000" latency="0.000100" />

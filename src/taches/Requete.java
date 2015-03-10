@@ -2,6 +2,7 @@ package taches;
 import java.io.UnsupportedEncodingException;
 
 import org.simgrid.msg.HostFailureException;
+import org.simgrid.msg.Msg;
 import org.simgrid.msg.Process;
 import org.simgrid.msg.Task;
 import org.simgrid.msg.TaskCancelledException;
@@ -25,7 +26,7 @@ public class Requete extends Task{
 		String reponse;
 		try {
 			reponse = ((acteurs.SuperPeer) Process.currentProcess()).reponse(this.cle, this.getSource().getName());
-//			Msg.info("REPONSE : \"" + reponse+"\".");
+			Msg.info("REPONSE : \"" + reponse+"\".");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

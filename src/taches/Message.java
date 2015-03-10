@@ -35,6 +35,7 @@ public class Message extends Task{
 	}
 	
 	public Message(ArrayList<String> list, int type){
+		super();
 		this.list=list;
 		this.type=type;
 	}

@@ -29,10 +29,12 @@ public class Publication extends Process {
 	private HashMap<String, byte[]> amis;
 
 
-	public Publication(Host host, String name, String[]args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public Publication(Host host, String name, String[]args) throws NoSuchAlgorithmException, UnsupportedEncodingException, HostFailureException {
 		super(host,name,args);
+		Process.sleep(1400);
 		this.amis=(HashMap<String, byte[]>) host.getData();
-		monCode = new byte[]{01};
+		this.amis.put("Hicham", "1".getBytes());
+		monCode = "0".getBytes();
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		md.reset();
 		md.update(monCode);
@@ -40,17 +42,17 @@ public class Publication extends Process {
 	}
 
 	public void main(String[] args) throws MsgException {
-		Process.sleep(1400);
 		AjouteDonnee env = new AjouteDonnee(args[1]);
 		Msg.info(Host.currentHost().getName()+" ajoute une donnée sur " + args[0] + ".");
-		env.send(args[0]);
+		env.send(args[0]+"_process1");
 		MessageDigest md;
 		try {//on met le hash de la publi sur ma mbox de publi
 			md = MessageDigest.getInstance("SHA-1");
 			md.reset();
 			md.update(args[1].getBytes());
+			(new Message(md.digest(), 1)).dsend("abc");//this.mboxPublication);
 			Msg.info(Host.currentHost().getName()+" donne à ses amis le hash de l'info qu'il a ajouté sur " + args[0] + ".");
-			(new Message(md.digest(), 1)).send(this.mboxPublication);
+
 
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -62,6 +64,7 @@ public class Publication extends Process {
 			Message ping = new Message("ping");
 			ping.setNomPeer(host.getName());
 			ping.send(ami);
+			Msg.info(host.getName()+ " ping " + ami);
 		}
 	}
 }

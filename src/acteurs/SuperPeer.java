@@ -24,22 +24,25 @@ import taches.Message;
  */
 public class SuperPeer extends Process {
 
+	String maBoiteAuxLettres;
 	public SuperPeer(Host host, String name, String[]args) throws NumberFormatException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		super(host,name,args);
 
 		this.host.setData(genData(Integer.parseInt(args[0])));
+		maBoiteAuxLettres = host.getName()+"_process1";
 	} 
 
 	public void main(String[] args) throws MsgException {
 		//On met le SuperPeer à l'écoute sur la boite aux lettres qui a son nom
 		Msg.info(this.host.getName() + " ecoute les requetes sur sa boite aux lettres.");
 		while(true){
-			Task.listen(this.host.getName());
-			Task requete = Task.receive(this.host.getName());
+			Task.listen(this.maBoiteAuxLettres);
+			Task requete = Task.receive(this.maBoiteAuxLettres);
 			requete.execute();
+
 		}
 	}
-	
+
 	/**
 	 * Cette fonction sert a generer une HashMap avec des bytes comme valeur, pour mettre qqch dans le data du host.
 	 * @param nb
@@ -69,15 +72,15 @@ public class SuperPeer extends Process {
 		reponseMessage.send(sender);
 		return res;
 	}
-	
+
 	public boolean ajouteDonnee(String donnee) throws UnsupportedEncodingException, NoSuchAlgorithmException{
-		
+
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		md.reset();
 		md.update(donnee.getBytes());
 		String cle = new String(md.digest(), "UTF-8");
 		((HashMap<String, String>) host.getData()).put(cle, donnee);
-		
+
 		return true;
 	}
 }
